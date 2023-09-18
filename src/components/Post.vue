@@ -3,9 +3,9 @@
 import { useRoute } from 'vue-router';
 import { ref, reactive, onBeforeMount } from 'vue'
 import axios from 'axios'
-const post = reactive({})
 const route = useRoute()
 const id = route.params.id
+const post = reactive({})
 const comments = ref([])
 onBeforeMount(() => {
     // fetch(`https://dummyjson.com/posts/${id}`)

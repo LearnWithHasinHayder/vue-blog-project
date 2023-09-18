@@ -17,6 +17,13 @@ onBeforeMount(() => {
             posts.value = res.data.posts
         })
 })
+
+function loadMore() {
+    axios.get('https://dummyjson.com/posts?limit=20&skip=20')
+        .then(res => {
+            posts.value = [...posts.value, ...res.data.posts]
+        })
+}
 </script>
 <template>
     <!-- <h1 class="text-2xl mb-3">This is posts page</h1> -->
@@ -32,6 +39,9 @@ onBeforeMount(() => {
             {{ post.body }}
         </p>
     </article>
+    <button @click="loadMore()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" v-if="posts.length>0">
+        Load More
+    </button>
 </template>
 
 <style></style>
