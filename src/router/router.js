@@ -7,7 +7,9 @@ import Post from '../components/Post.vue'
 import Sidebar from '../components/Sidebar.vue'
 import Protected from '../components/Protected.vue'
 import Login from '../components/Login.vue'
-import {authStore} from '../store/store'
+
+import { authStore } from '../store/piniastore';
+const auth = authStore()
 
 const routes = [
     {
@@ -68,7 +70,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    if(to.meta.requiresAuth && !authStore.isAuthenticated){
+    if(to.meta.requiresAuth && !auth.isAuthenticated){
         next('/login')
     }else{
         next()
