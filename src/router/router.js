@@ -7,6 +7,7 @@ import Post from '../components/Post.vue'
 import Sidebar from '../components/Sidebar.vue'
 import Protected from '../components/Protected.vue'
 import Login from '../components/Login.vue'
+import {authStore} from '../store/store'
 
 const routes = [
     {
@@ -57,9 +58,9 @@ const routes = [
     }
 ]
 
-const isAuthenticated = () => {
-    return localStorage.getItem('token')=='123'
-}
+// const isAuthenticated = () => {
+//     return localStorage.getItem('token')=='123'
+// }
 
 const router = createRouter({
     history: createWebHistory(),
@@ -67,7 +68,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    if(to.meta.requiresAuth && !isAuthenticated()){
+    if(to.meta.requiresAuth && !authStore.isAuthenticated){
         next('/login')
     }else{
         next()
