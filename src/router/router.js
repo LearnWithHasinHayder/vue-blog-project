@@ -9,7 +9,7 @@ import Protected from '../components/Protected.vue'
 import Login from '../components/Login.vue'
 
 import { authStore } from '../store/piniastore';
-const auth = authStore()
+
 
 const routes = [
     {
@@ -70,6 +70,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+    const auth = authStore()
     if(to.meta.requiresAuth && !auth.isAuthenticated){
         next('/login')
     }else{
