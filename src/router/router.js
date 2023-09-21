@@ -5,11 +5,19 @@ import Contact from '../components/Contact.vue'
 import Posts from '../components/Posts.vue'
 import Post from '../components/Post.vue'
 import Sidebar from '../components/Sidebar.vue'
+import Protected from '../components/Protected.vue'
+import Login from '../components/Login.vue'
 
 const routes = [
     {
         path: '/', components: {
             default: Home,
+            LeftSideBar: Sidebar
+        }
+    },
+    {
+        path: '/login', components: {
+            default: Login,
             LeftSideBar: Sidebar
         }
     },
@@ -37,12 +45,33 @@ const routes = [
             LeftSideBar: Sidebar
         },
         name: 'post',
+    },
+    {
+        path: '/protected', components: {   
+            default: Protected,
+            LeftSideBar: Sidebar,
+        },
+        meta:{
+            requiresAuth: true
+        }
     }
 ]
+
+const isAuthenticated = () => {
+    return localStorage.getItem('token')=='123'
+}
 
 const router = createRouter({
     history: createWebHistory(),
     routes
+})
+
+router.beforeEach((to, from, next) => {
+    if(to.meta.requiresAuth && !isAuthenticated()){
+        next('/login')
+    }else{
+        next()
+    }
 })
 
 export default router
